@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AccesoDatos
+{
+    public class CustomerRepository
+    {
+
+        public nortwind contexto = new nortwind();
+
+        public List<Customers> ObtenerTodos()
+        {
+            var cliente = from custM in contexto.Customers select custM;
+            return cliente.ToList();
+        }
+
+        public Customers ObtenerPorID(string id)
+        {
+            var clientes = from cm in contexto.Customers where cm.CustomerID == id select cm;
+            return clientes.FirstOrDefault();
+        }
+    }
+}
