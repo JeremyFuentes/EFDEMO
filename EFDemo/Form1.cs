@@ -100,5 +100,25 @@ namespace EFDemo
             MessageBox.Show("Cliente Actualizado");
             dgvCustomers.DataSource = lista1;
         }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (tbxCustomerID.Text != "")
+            {
+                var eliminadas = cr.EliminarCliente(tbxCustomerID.Text);
+                MessageBox.Show($"Se elimino {eliminadas} filas");
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un cliente a eliminar");
+            }
+
+            VaciarTbox();
+
+            var cliente = cr.ObtenerPorID(tboxObtenerPorID.Text);
+            List<Customers> lista1 = new List<Customers> { cliente };
+            dgvCustomers.DataSource = lista1;
+
+        }
     }
 }
