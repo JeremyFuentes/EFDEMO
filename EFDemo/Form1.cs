@@ -24,12 +24,20 @@ namespace EFDemo
         {
             var cliente = cr.ObtenerTodos();
             dgvCustomers.DataSource = cliente;
+
+            VaciarTbox();
         }
 
         private void btnObtenerPorID_Click(object sender, EventArgs e)
         {
             var cliente = cr.ObtenerPorID(tboxObtenerPorID.Text);
             List<Customers> lista1 = new List<Customers> { cliente };
+
+            if (cliente != null)
+            {
+                llenarCampos(cliente);
+            }
+
             dgvCustomers.DataSource = lista1;
         }
 
@@ -65,6 +73,15 @@ namespace EFDemo
             return cliente;
         }
 
+        private void llenarCampos(Customers customers)
+        {
+            tbxCustomerID.Text = customers.CustomerID;
+            tbxCompanyName.Text = customers.CompanyName;
+            tbxContactName.Text = customers.ContactName;
+            tbxContactTitle.Text = customers.ContactTitle;
+            tbxAddress.Text = customers.Address;
+        }
+
         private void VaciarTbox()
         {
             tbxCustomerID.Text = "";
@@ -72,6 +89,16 @@ namespace EFDemo
             tbxContactName.Text = "";
             tbxContactTitle.Text = "";
             tbxAddress.Text = "";
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            var cliente = CrearCliente();
+            cr.UpdateCliente(cliente);
+            var resultado = cr.ObtenerPorID(cliente.CustomerID);
+            List<Customers> lista1 = new List<Customers> { resultado };
+            MessageBox.Show("Cliente Actualizado");
+            dgvCustomers.DataSource = lista1;
         }
     }
 }
