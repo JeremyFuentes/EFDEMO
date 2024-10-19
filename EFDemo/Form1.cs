@@ -32,5 +32,46 @@ namespace EFDemo
             List<Customers> lista1 = new List<Customers> { cliente };
             dgvCustomers.DataSource = lista1;
         }
+
+        private void btnInsertar_Click(object sender, EventArgs e)
+        {
+            if (tbxCustomerID.Text != "")
+            {
+                var cliente = CrearCliente();
+                var resultado = cr.InsertarCliente(cliente);
+                MessageBox.Show($"Se inserto {resultado}");
+            }
+            else
+            {
+                MessageBox.Show("No se puede insertar un cliente en blanco");
+            }
+
+            VaciarTbox();
+            var clientes = cr.ObtenerTodos();
+            dgvCustomers.DataSource = clientes;
+        }
+
+        private Customers CrearCliente()
+        {
+            var cliente = new Customers()
+            {
+                CustomerID = tbxCustomerID.Text,
+                CompanyName = tbxCompanyName.Text,
+                ContactName = tbxContactName.Text,
+                ContactTitle = tbxContactTitle.Text,
+                Address = tbxAddress.Text,
+            };
+
+            return cliente;
+        }
+
+        private void VaciarTbox()
+        {
+            tbxCustomerID.Text = "";
+            tbxCompanyName.Text = "";
+            tbxContactName.Text = "";
+            tbxContactTitle.Text = "";
+            tbxAddress.Text = "";
+        }
     }
 }
